@@ -13,6 +13,10 @@ when "debian"
     default['rstudio']['apt']['uri'] = 'http://cran.stat.ucla.edu/bin/linux/debian'
 end
 
+default['rstudio']['downloadURL'] = 'http://download2.rstudio.org/rstudio-server-0.98.495-amd64.deb'
+default['rstudio']['downloadchecksum'] = 'ff05cbc59cc4209dd0444c1988e2ade45c4a2ec9d4ba13deae6026399c40a399'
+
+
 # You can define a simple array of packages in your role/environment/node and the 
 # CRAN recipe will install them.
 default['rstudio']['cran']['packages'] = []

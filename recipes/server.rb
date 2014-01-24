@@ -14,9 +14,30 @@ when "ubuntu", "debian"
         action :install
     end
 
-    package "rstudio-server" do
-        action :install
+    package "psmisc"
+    package "libssl0.9.8"
+    package "libapparmor1"
+
+    if node["kernel"]["machine"] == "x86_64"
+
+        remote_file "#{Chef::Config[:file_cache_path]}/#{node['rstudio']['downloadURL'].split('/').last}" do
+          source "#{node['rstudio']['downloadURL']}"
+          checksum node['rstudio']['downloadchecksum']
+          mode "0644"
+        end
+
+
+        dpkg_package "rstudio-server" do
+                    source "#{Chef::Config[:file_cache_path]}/#{node['rstudio']['downloadURL'].split('/').last}"
+            action :install
+        end
+
+    else
+
+        raise ArgumentError, "Only 64bit currently supported."
+
     end
+
 end
 
 service "rstudio-server" do
